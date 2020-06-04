@@ -15,8 +15,12 @@
  */
 #include QMK_KEYBOARD_H
 
+/*  Heavily inspired by https://github.com/mrlinuxfish/qmk_firmware/blob/fish-kyria/keyboards/kyria/keymaps/mrlinuxfish/keymap.c */
+
 enum layers {
     _QWERTY = 0,
+    _COLEMAK,
+    _GAME,
     _MEDR,
     _NAVR,
     _MOUR,
@@ -25,27 +29,51 @@ enum layers {
     _FUNL
 };
 
+/* Add definitions for MT and LT */
+#define GUI_A MT(MOD_LGUI, KC_A) // Q & C
+#define GUI_CLN MT(MOD_LGUI, KC_SCLN) // Q
+#define GUI_O MT(MOD_LGUI, KC_O) // C
+
+#define ALT_S MT(MOD_LALT, KC_S) // Q
+#define ALT_L MT(MOD_LALT, KC_L)
+#define ALT_R MT(MOD_LALT, KC_R) // C
+#define ALT_I MT(MOD_LALT, KC_I)
+
+#define CTRL_D MT(MOD_LCTL, KC_D) // Q
+#define CTRL_K MT(MOD_LCTL, KC_K)
+#define CTRL_S MT(MOD_LCTL, KC_S) // C
+#define CTRL_E MT(MOD_LCTL, KC_E)
+
+#define SHFT_F MT(MOD_LSFT, KC_F) // Q
+#define SHFT_J MT(MOD_LSFT, KC_J)
+#define SHFT_T MT(MOD_LSFT, KC_T) // C
+#define SHFT_N MT(MOD_LSFT, KC_N)
+
+#define ALTG_X MT(MOD_RALT, KC_X) // Q & C
+#define ALTG_DT MT(MOD_RALT, KC_DOT)
+
+#define MED_ESC LT(_MEDR, KC_ESC)
+#define NAV_SPC LT(_NAVR, KC_SPC)
+#define MOS_TAB LT(_MOUR, KC_TAB)
+#define SYM_ENT LT(_SYML, KC_ENT)
+#define NUM_BSPC LT(_NUML, KC_BSPC)
+#define FN_DEL LT(_FUNL, KC_DEL)
+#define QUERTY LT(_QUERTY)
+#define COLEMAK DF(_COLEMAK)
+#define GAME DF(_GAME)
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/*
- * Base Layer: QWERTY
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |        |
- * |        |LGui  |LAlt  |LCtrl |LShift|      |                              |      |LShift|LCtrl |LAlt  |LGui  |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |   Z  |   X  |   C  |   V  |   B  |      |      |  |      |      |   N  |   M  | ,  < | . >  | /  ? |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      | Esc  | Space| Tab  |  | Enter| Bksp | Del  |      |      |
- *                        |      |      | Media| Nav  | Mouse|  | Sym  | Num  | Fun  |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
-    [_QWERTY] = LAYOUT(
-      _______, KC_Q,         KC_W,         KC_E,         KC_R,         KC_T,                                                                                            KC_Y,              KC_U,         KC_I,         KC_O,         KC_P,            _______,
-      _______, LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D), LSFT_T(KC_F), KC_G,                                                                                            KC_H,              LSFT_T(KC_J), LCTL_T(KC_K), LALT_T(KC_L), LGUI_T(KC_SCLN), _______,
-      _______, KC_Z,         KC_X,         KC_C,         KC_V,         KC_B,              _______,           _______,            _______,           _______,            KC_N,              KC_M,         KC_COMM,      KC_DOT,       KC_SLSH,         _______,
-                                           _______,      _______,      LT(_MEDR, KC_ESC), LT(_NAVR, KC_SPC), LT(_MOUR,  KC_TAB), LT(_SYML, KC_ENT), LT(_NUML, KC_BSPC), LT(_FUNL, KC_DEL), _______, _______
+    [_QWERTY] = LAYOUT( \
+ //,-----------------------------------------------------.                                      ,-----------------------------------------------------.
+    _______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                           KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______, \
+ //|--------+--------+--------+--------+--------+--------|                                      |--------+--------+--------+--------+--------+--------|
+    _______, GUI_A,   ALT_S,   CTRL_D,  SHFT_F,  KC_G,                                           KC_H,    SHFT_J,  CTRL_K,  ALT_L,   GUI_CLN, _______, \
+ //|--------+--------+--------+--------+--------+--------+-----------------.  ,-----------------+--------+--------+--------+--------+--------+--------|
+    _______,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,   _______, _______,     _______, _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, _______, \
+ //`--------------------------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------------------------'
+                               _______, _______, MED_ESC, NAV_SPC, MOS_TAB,    SYM_ENT, NUM_BSPC,FN_DEL,  _______, _______ \
+ //                           `--------------------------------------------'  `--------------------------------------------'
     ),
 /*
  * Lower Layer: Symbols
