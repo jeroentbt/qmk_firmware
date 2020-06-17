@@ -63,6 +63,23 @@ enum layers {
 #define GAME DF(_GAME)
 
 
+// Macros for ATEN keyboard/Mouse switch
+enum custom_keycodes {
+  ATN_NXT = SAFE_RANGE,
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case ATN_NXT:
+        if (record->event.pressed) {
+            SEND_STRING(SS_TAP(X_LOCKING_SCROLL)SS_TAP(X_LOCKING_SCROLL)SS_TAP(X_ENTER));
+        }
+        break;
+    }
+    return true;
+};
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT( \
  //,-----------------------------------------------------.                                      ,-----------------------------------------------------.
@@ -70,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //|--------+--------+--------+--------+--------+--------|                                      |--------+--------+--------+--------+--------+--------|
     _______, GUI_A,   ALT_S,   CTRL_D,  SHFT_F,  KC_G,                                           KC_H,    SHFT_J,  CTRL_K,  ALT_L,   GUI_CLN, _______, \
  //|--------+--------+--------+--------+--------+--------+-----------------.  ,-----------------+--------+--------+--------+--------+--------+--------|
-    _______, KC_Z,    ALTG_X,  KC_C,    KC_V,    KC_B,    NAV_SPC, MOS_TAB,    SYM_ENT, NUM_BSPC,KC_N,    KC_M,    KC_COMM, ALTG_DT, KC_SLSH, _______, \
+    _______, KC_Z,    ALTG_X,  KC_C,    KC_V,    KC_B,    NAV_SPC, MOS_TAB,    ATN_NXT, NUM_BSPC,KC_N,    KC_M,    KC_COMM, ALTG_DT, KC_SLSH, _______, \
  //`--------------------------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------------------------'
                                _______, _______, MED_ESC, NAV_SPC, MOS_TAB,    SYM_ENT, NUM_BSPC,FN_DEL,  _______, _______ \
  //                           `--------------------------------------------'  `--------------------------------------------'
