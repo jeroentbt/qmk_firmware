@@ -16,6 +16,9 @@
 
 #pragma once
 
+#define TAPPING_TERM 250
+#define PERMISSIVE_HOLD
+
 #ifdef OLED_DRIVER_ENABLE
   #define OLED_DISPLAY_128X64
 #endif
