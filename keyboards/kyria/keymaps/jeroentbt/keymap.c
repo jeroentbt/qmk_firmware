@@ -72,7 +72,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
     case ATN_NXT:
         if (record->event.pressed) {
-            SEND_STRING(SS_TAP(X_LOCKING_SCROLL)SS_TAP(X_LOCKING_SCROLL)SS_TAP(X_ENTER));
+            SEND_STRING(SS_TAP(X_LOCKING_SCROLL)SS_TAP(X_LOCKING_SCROLL)SS_DELAY(10)SS_TAP(X_ENTER));
         }
         break;
     }
