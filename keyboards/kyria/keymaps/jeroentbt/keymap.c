@@ -225,6 +225,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST); */
 /* } */
 
+// layer RGB lighting
+const rgblight_segment_t PROGMEM my_game_rgb_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {9, 9, HSV_CYAN});
+
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+                                                                               my_game_rgb_layer);
+void keyboard_post_init_user(void) {
+    // Enable the LED layers
+    rgblight_layers = my_rgb_layers;
+}
+
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(0, layer_state_cmp(state, _GAME));
+    return state;
+}
+
+
+
+
 #ifdef OLED_DRIVER_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 	return OLED_ROTATION_180;
