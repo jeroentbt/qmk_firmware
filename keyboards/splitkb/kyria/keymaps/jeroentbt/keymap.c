@@ -94,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //|--------+--------+--------+--------+--------+--------+-----------------.  ,-----------------+--------+--------+--------+--------+--------+--------|
     _______, KC_Z,    ALTG_X,  KC_C,    KC_V,    KC_B,    NAV_SPC, MOS_TAB,    ATN_NXT, GAME    ,KC_N,    KC_M,    KC_COMM, ALTG_DT, KC_SLSH, _______, \
  //`--------------------------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------------------------'
-                               _______, KC_PSCR, MED_ESC, NAV_SPC, MOS_TAB,    SYM_ENT, NUM_BSPC,FN_DEL,  KC_RALT, _______ \
+                               RGB_TOG, KC_PSCR, MED_ESC, NAV_SPC, MOS_TAB,    SYM_ENT, NUM_BSPC,FN_DEL,  KC_RALT, _______ \
  //                           `--------------------------------------------'  `--------------------------------------------'
     ),
 
@@ -245,3 +245,21 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
 
 
 
+#ifdef ENCODER_ENABLE
+bool encoder_update_user(uint8_t index, bool clockwise) {
+  if (index == 0) { /* First encoder */
+    if (clockwise) {
+      rgblight_step();
+    } else {
+      rgblight_step_reverse();
+    }
+  } else if (index == 1) { /* Second encoder */
+    if (clockwise) {
+      rgblight_decrease_val();
+    } else {
+      rgblight_increase_val();
+    }
+  }
+  return false;
+}
+#endif
