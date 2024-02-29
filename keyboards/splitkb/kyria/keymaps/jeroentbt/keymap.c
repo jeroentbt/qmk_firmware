@@ -68,23 +68,6 @@ enum layers {
 #define G_R_NAV LT(_NAVL, KC_R)
 
 
-// Macros for ATEN keyboard/Mouse switch
-enum custom_keycodes {
-  ATN_NXT = SAFE_RANGE,
-};
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-    case ATN_NXT:
-        if (record->event.pressed) {
-            SEND_STRING(SS_TAP(X_LOCKING_SCROLL)SS_TAP(X_LOCKING_SCROLL)SS_DELAY(10)SS_TAP(X_ENTER));
-        }
-        break;
-    }
-    return true;
-};
-
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT( \
  //,-----------------------------------------------------.                                      ,-----------------------------------------------------.
@@ -92,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //|--------+--------+--------+--------+--------+--------|                                      |--------+--------+--------+--------+--------+--------|
     _______, GUI_A,   ALT_S,   CTRL_D,  SHFT_F,  KC_G,                                           KC_H,    SHFT_J,  CTRL_K,  ALT_L,   GUI_CLN, _______, \
  //|--------+--------+--------+--------+--------+--------+-----------------.  ,-----------------+--------+--------+--------+--------+--------+--------|
-    _______, KC_Z,    ALTG_X,  KC_C,    KC_V,    KC_B,    NAV_SPC, MOS_TAB,    ATN_NXT, GAME    ,KC_N,    KC_M,    KC_COMM, ALTG_DT, KC_SLSH, _______, \
+    _______, KC_Z,    ALTG_X,  KC_C,    KC_V,    KC_B,    NAV_SPC, MOS_TAB,    KC_MS_BTN1, GAME    ,KC_N,    KC_M,    KC_COMM, ALTG_DT, KC_SLSH, _______,    \
  //`--------------------------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------------------------'
                                RGB_TOG, KC_PSCR, MED_ESC, NAV_SPC, MOS_TAB,    SYM_ENT, NUM_BSPC,FN_DEL,  KC_RALT, _______ \
  //                           `--------------------------------------------'  `--------------------------------------------'
@@ -112,13 +95,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_GAME] = LAYOUT( \
  //,-----------------------------------------------------.                                      ,-----------------------------------------------------.
-    KC_ESC,  KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,                                           KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______, \
+    KC_ESC,  KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,                                           KC_Y,    KC_U,    KC_UP,  KC_O,       KC_P,    _______, \
  //|--------+--------+--------+--------+--------+--------|                                      |--------+--------+--------+--------+--------+--------|
-    KC_M,    KC_LSFT,   KC_A,    KC_S,    KC_D,    KC_F,                                           KC_H,    SHFT_J,  CTRL_K,  ALT_L,   GUI_CLN, _______, \
+    KC_M,    KC_LSFT,   KC_A,    KC_S,    KC_D,    KC_F,                                           KC_H,   KC_LEFT, KC_DOWN, KC_RIGHT,   GUI_CLN, _______, \
  //|--------+--------+--------+--------+--------+--------+-----------------.  ,-----------------+--------+--------+--------+--------+--------+--------|
-    KC_T,    KC_LCTL,   KC_Z,    KC_X,    KC_C,    KC_B,   G_R_NAV,G_1_NUM,    ATN_NXT,  QWERTY,  KC_N,    KC_M,    KC_COMM, ALTG_DT, KC_SLSH, _______, \
+    KC_T,    KC_LCTL,   KC_Z,    KC_X,    KC_C,    KC_B,   G_R_NAV,G_1_NUM,    KC_MS_BTN1,  QWERTY,  KC_N,    KC_M,    KC_COMM, ALTG_DT,    KC_SLSH, _______, \
  //`--------------------------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------------------------'
-                               _______, KC_TAB,  KC_LCTL,  KC_SPC,  KC_E,      SYM_ENT, NUM_BSPC, FN_DEL,  KC_RALT, _______ \
+                               _______, KC_TAB,  KC_LCTL,  KC_SPC,  KC_E,      KC_MS_BTN1,KC_RBRC, FN_DEL,  KC_RALT, _______ \
  //                           `--------------------------------------------'  `--------------------------------------------'
     ),
 
